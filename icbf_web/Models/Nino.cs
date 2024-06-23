@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace icbf_web.Models;
 
@@ -25,6 +26,7 @@ public partial class Nino
     public string CiudadNacimientoNino { get; set; } = null!;
     [Required(ErrorMessage = "Campo obligatorio")]
     [Display(Name = "Acudiente")]
+  
     public string IdAcudiente { get; set; } = null!;
     [Required(ErrorMessage = "Campo obligatorio")]
     [Display(Name = "Teléfono")]
@@ -39,10 +41,11 @@ public partial class Nino
     [Display(Name = "Jardín")]
     public int IdJardin { get; set; }
 
-    public virtual Usuario IdAcudienteNavigation { get; set; } = null!;
-
-    public virtual Jardin IdJardinNavigation { get; set; } = null!;
-
+    [ForeignKey("IdAcudiente")]
+    public virtual Usuario  Usuario { get; set; }
+    [ForeignKey("IdJardin")]
+    public virtual Jardin Jardin { get; set; }
+    
     public virtual ICollection<RegistroAsistencia> RegistrosAsistencia { get; set; } = new List<RegistroAsistencia>();
 
     public virtual ICollection<RegistroAvanceAcademico> RegistrosAvanceAcademicos { get; set; } = new List<RegistroAvanceAcademico>();

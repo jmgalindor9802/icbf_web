@@ -66,6 +66,7 @@ namespace icbf_web.Controllers
         // GET: Usuarios/Create
         public IActionResult Create()
         {
+            var model = new CreateUsuarioViewModel();
             return View();
         }
 
@@ -74,6 +75,8 @@ namespace icbf_web.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create(CreateUsuarioViewModel model)
         {
+
+
             if (ModelState.IsValid)
             {
                 var user = new Usuario
@@ -82,7 +85,7 @@ namespace icbf_web.Controllers
                     Email = model.Email,
                     Nombres = model.Nombres,
                     Direccion = model.Direccion,
-                    Estado=true,
+                    Estado=true,    
                     Cedula=model.Cedula,
                     Telefono=model.Telefono,
                

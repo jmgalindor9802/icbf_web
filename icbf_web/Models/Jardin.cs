@@ -14,8 +14,7 @@ public partial class Jardin
     [Display(Name = "Nombre")]
     public string NombreJardin { get; set; } = null!;
     [Required(ErrorMessage = "Campo obligatorio")]
-    [MaxLength(200, ErrorMessage = "La direccion del jardin como maximo debetener 200 caracteres")]
-    [MinLength(8, ErrorMessage = "La direccion del jardin como minimo debe tener 8 caracteres")]
+   
     [Display(Name = "Dirección")]
     public string DireccionJardin { get; set; } = null!;
     [Required(ErrorMessage = "Campo obligatorio")]

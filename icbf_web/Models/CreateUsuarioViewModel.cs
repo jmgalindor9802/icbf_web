@@ -28,7 +28,7 @@ namespace icbf_web.Models
         [Required(ErrorMessage = "Campo obligatorio")] 
         public DateTime FechaNacimiento { get; set; }
         [Display(Name = "Jardín")]
-        [Required(ErrorMessage = "Campo obligatorio")] 
+        
         public int? IdJardin { get; set; }
         [Display(Name = "Rol")]
         [Required(ErrorMessage = "Campo obligatorio")] 
