@@ -22,7 +22,7 @@ namespace icbf_web.Data
         }
 
         public DbSet<Jardin> Jardines { get; set; }
-        public DbSet<MadreComunitaria> MadresComunitarias { get; set; }
+
         public DbSet<Nino> Ninos { get; set; }
         public DbSet<RegistroAsistencia> RegistrosAsistencia { get; set; }
         public DbSet<RegistroAvanceAcademico> RegistrosAvanceAcademicos { get; set; }

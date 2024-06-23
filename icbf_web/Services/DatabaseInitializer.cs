@@ -49,7 +49,13 @@ namespace icbf_web.Services
             var user = new Usuario()
             {
                 UserName = "admin.icbf@icbf.com",
-                Email = "admin.icbf@icbf.com"
+                Estado = true,
+                Email = "admin.icbf@icbf.com",
+                Cedula=0000000000,
+                Nombres="ADMINISTRADOR",
+                Direccion="ADMINISTRADOR",                
+                Telefono=3223633210
+
             };
             string defaultPassword = "Admin123#";
 

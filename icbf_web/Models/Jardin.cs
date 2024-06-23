@@ -22,7 +22,9 @@ public partial class Jardin
     [Display(Name = "Estado")]
     public string EstadoJardin { get; set; } = null!;
 
-    public virtual ICollection<MadreComunitaria> MadresComunitaria { get; set; } = new List<MadreComunitaria>();
+
 
     public virtual ICollection<Nino> Ninos { get; set; } = new List<Nino>();
+
+    public virtual ICollection<Usuario> Usuarios { get; set; } = new List<Usuario>();
 }

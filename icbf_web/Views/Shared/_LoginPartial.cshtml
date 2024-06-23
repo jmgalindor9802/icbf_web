@@ -1,26 +1,76 @@
 ﻿@using Microsoft.AspNetCore.Identity
-@inject SignInManager<IdentityUser> SignInManager
-@inject UserManager<IdentityUser> UserManager
+@using icbf_web.Models
+@inject SignInManager<Usuario> SignInManager
+@inject UserManager<Usuario> UserManager
 
 <ul class="navbar-nav">
-@if (SignInManager.IsSignedIn(User))
-{
-    <li class="nav-item">
-        <a  class="nav-link text-dark" asp-area="Identity" asp-page="/Account/Manage/Index" title="Manage">Hello @User.Identity?.Name!</a>
-    </li>
-    <li class="nav-item">
-        <form  class="form-inline" asp-area="Identity" asp-page="/Account/Logout" asp-route-returnUrl="@Url.Action("Index", "Home", new { area = "" })">
-            <button  type="submit" class="nav-link btn btn-link text-dark">Logout</button>
-        </form>
-    </li>
-}
-else
-{
-    <li class="nav-item">
-        <a class="nav-link text-dark" asp-area="Identity" asp-page="/Account/Register">Register</a>
-    </li>
-    <li class="nav-item">
-        <a class="nav-link text-dark" asp-area="Identity" asp-page="/Account/Login">Login</a>
-    </li>
-}
+    @if (SignInManager.IsSignedIn(User))
+    {
+        @if (SignInManager.IsSignedIn(User))
+        {
+            @if (User.IsInRole("admin"))
+            {
+                <li class="nav-item">
+                    <a class="nav-link text-dark" asp-area="" asp-controller="Usuarios" asp-action="Index">Usuarios</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link text-dark" asp-area="" asp-controller="Jardines" asp-action="Index">Jardines</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link text-dark" asp-area="" asp-controller="RegistroAsistencias" asp-action="Index">Registro de asistencias</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link text-dark" asp-area="" asp-controller="MadreComunitarias" asp-action="Index">Madres comunitarias</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link text-dark" asp-area="" asp-controller="RegistroAvanceAcademico" asp-action="Index">Registro de academico</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link text-dark" asp-area="" asp-controller="Ninos" asp-action="Index">Niños</a>
+                </li>
+                <li class="nav-item">
+                    <a id="manage" class="nav-link text-dark" asp-area="Identity" asp-page="/Account/Manage/Index" title="Manage">ADMINISTRADOR</a>
+                </li>
+            }
+            else if (User.IsInRole("acudiente"))
+            {
+                <li class="nav-item">
+                    <a class="nav-link text-dark" asp-area="" asp-controller="Ninos" asp-action="Index">Niños</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link text-dark" asp-area="" asp-controller="RegistroAvanceAcademico" asp-action="Index">Registro de academico</a>
+                </li>
+                <li class="nav-item">
+                    <a id="manage" class="nav-link text-dark" asp-area="Identity" asp-page="/Account/Manage/Index" title="Manage">Acudiente: @UserManager.GetUserName(User)!</a>
+                </li>
+            }
+            else if (User.IsInRole("madre"))
+            {
+                <li class="nav-item">
+                    <a class="nav-link text-dark" asp-area="" asp-controller="RegistroAsistencias" asp-action="Index">Registro de asistencias</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link text-dark" asp-area="" asp-controller="RegistroAvanceAcademico" asp-action="Index">Registro de academico</a>
+                </li>
+                <li class="nav-item">
+                    <a id="manage" class="nav-link text-dark" asp-area="Identity" asp-page="/Account/Manage/Index" title="Manage">Madre Comunitaria: @UserManager.GetUserName(User)!</a>
+                </li>
+            }
+
+            <li class="nav-item ml-auto">
+                <form id="logoutForm" class="form-inline" asp-area="Identity" asp-page="/Account/Logout" asp-route-returnUrl="@Url.Action("Index", "Home", new { area = "" })">
+                    <button id="logout" type="submit" class="btn btn-success">Cerrar sesión</button>
+                </form>
+            </li>
+        }
+    }
+    else
+    {
+        @* <li class="nav-item">
+    <a class="nav-link text-dark" asp-area="Identity" asp-page="/Account/Register">Register</a>
+    </li> *@
+        <li class="nav-item">
+            <a class="btn btn-success" asp-area="Identity" asp-page="/Account/Login">Iniciar Sesión</a>
+        </li>
+    }
 </ul>

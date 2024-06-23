@@ -1,0 +1,31 @@
+﻿@model icbf_web.Models.Usuario
+
+@{
+    ViewData["Title"] = "Eliminar Usuario";
+}
+
+<h1>Eliminar Usuario</h1>
+
+<h3>¿Está seguro que desea deshabilitar este usuario?</h3>
+<div>
+    <h4>Detalles del Usuario</h4>
+    <hr />
+    <dl class="row">
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Nombres)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Nombres)
+        </dd>
+        <!-- Agregar más propiedades según sea necesario -->
+    </dl>
+</div>
+
+<form asp-action="Delete">
+    <input type="hidden" asp-for="Id" />
+
+    <div class="form-group">
+        <input type="submit" value="Deshabilitar" class="btn btn-danger" />
+        <a asp-action="Index">Cancelar</a>
+    </div>
+</form>
