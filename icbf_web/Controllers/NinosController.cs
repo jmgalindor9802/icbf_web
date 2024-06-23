@@ -7,23 +7,27 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using icbf_web.Data;
 using icbf_web.Models;
+using Microsoft.AspNetCore.Identity;
 
 namespace icbf_web.Controllers
 {
     public class NinosController : Controller
     {
         private readonly ApplicationDbContext _context;
+        private readonly UserManager<Usuario> _userManager;
 
-        public NinosController(ApplicationDbContext context)
+        public NinosController(ApplicationDbContext context, UserManager<Usuario> userManager)
         {
             _context = context;
+            _userManager = userManager;
         }
+
 
         // GET: Ninos
         public async Task<IActionResult> Index()
         {
-            var applicationDbContext = _context.Ninos.Include(n => n.Jardin).Include(n => n.Usuario);
-            return View(await applicationDbContext.ToListAsync());
+
+            return View(await _context.Ninos.ToListAsync());
         }
 
         // GET: Ninos/Details/5
@@ -35,8 +39,6 @@ namespace icbf_web.Controllers
             }
 
             var nino = await _context.Ninos
-                .Include(n => n.Jardin)
-                .Include(n => n.Usuario)
                 .FirstOrDefaultAsync(m => m.IdNino == id);
             if (nino == null)
             {
@@ -47,10 +49,12 @@ namespace icbf_web.Controllers
         }
 
         // GET: Ninos/Create
-        public IActionResult Create()
+        public async Task<IActionResult> Create()
         {
-            ViewData["IdJardin"] = new SelectList(_context.Jardines, "IdJardin", "IdJardin");
-            ViewData["IdAcudiente"] = new SelectList(_context.Users, "Id", "Id");
+            ViewBag.Usuarios = new SelectList(await _userManager.Users.ToListAsync(), "Id", "Nombres");
+            ViewBag.Jardines = new SelectList(await _context.Jardines.ToListAsync(), "IdJardin", "NombreJardin");
+
+
             return View();
         }
 
@@ -59,7 +63,7 @@ namespace icbf_web.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("IdNino,NombreNino,FechaNacimientoNino,TipoSangreNino,CiudadNacimientoNino,IdAcudiente,TelefonoNino,DireccionNino,EpsNino,IdJardin")] Nino nino)
+        public async Task<IActionResult> Create([Bind("IdNino,NombreNino,FechaNacimientoNino,TipoSangreNino,CiudadNacimientoNino,UsuarioId,TelefonoNino,DireccionNino,EpsNino,JardinId")] Nino nino)
         {
             if (ModelState.IsValid)
             {
@@ -67,8 +71,9 @@ namespace icbf_web.Controllers
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["IdJardin"] = new SelectList(_context.Jardines, "IdJardin", "IdJardin", nino.IdJardin);
-            ViewData["IdAcudiente"] = new SelectList(_context.Users, "Id", "Id", nino.IdAcudiente);
+            ViewBag.Usuarios = new SelectList(await _userManager.Users.ToListAsync(), "Id", "Nombres");
+            ViewBag.Jardines = new SelectList(await _context.Jardines.ToListAsync(), "IdJardin", "NombreJardin");
+
             return View(nino);
         }
 
@@ -85,8 +90,6 @@ namespace icbf_web.Controllers
             {
                 return NotFound();
             }
-            ViewData["IdJardin"] = new SelectList(_context.Jardines, "IdJardin", "DireccionJardin", nino.IdJardin);
-            ViewData["IdAcudiente"] = new SelectList(_context.Users, "Id", "Id", nino.IdAcudiente);
             return View(nino);
         }
 
@@ -95,7 +98,7 @@ namespace icbf_web.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(long id, [Bind("IdNino,NombreNino,FechaNacimientoNino,TipoSangreNino,CiudadNacimientoNino,IdAcudiente,TelefonoNino,DireccionNino,EpsNino,IdJardin")] Nino nino)
+        public async Task<IActionResult> Edit(long id, [Bind("IdNino,NombreNino,FechaNacimientoNino,TipoSangreNino,CiudadNacimientoNino,UsuarioId,TelefonoNino,DireccionNino,EpsNino,JardinId")] Nino nino)
         {
             if (id != nino.IdNino)
             {
@@ -122,8 +125,6 @@ namespace icbf_web.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["IdJardin"] = new SelectList(_context.Jardines, "IdJardin", "DireccionJardin", nino.IdJardin);
-            ViewData["IdAcudiente"] = new SelectList(_context.Users, "Id", "Id", nino.IdAcudiente);
             return View(nino);
         }
 
@@ -136,8 +137,6 @@ namespace icbf_web.Controllers
             }
 
             var nino = await _context.Ninos
-                .Include(n => n.Jardin)
-                .Include(n => n.Usuario)
                 .FirstOrDefaultAsync(m => m.IdNino == id);
             if (nino == null)
             {

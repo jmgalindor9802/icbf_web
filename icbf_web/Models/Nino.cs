@@ -27,7 +27,7 @@ public partial class Nino
     [Required(ErrorMessage = "Campo obligatorio")]
     [Display(Name = "Acudiente")]
   
-    public string IdAcudiente { get; set; } = null!;
+    public string UsuarioId { get; set; } = null!;
     [Required(ErrorMessage = "Campo obligatorio")]
     [Display(Name = "Teléfono")]
     public long TelefonoNino { get; set; }
@@ -37,15 +37,13 @@ public partial class Nino
     [Required(ErrorMessage = "Campo obligatorio")]
     [Display(Name = "EPS")]
     public string EpsNino { get; set; } = null!;
-    [Required(ErrorMessage = "Campo obligatorio")]
-    [Display(Name = "Jardín")]
-    public int IdJardin { get; set; }
 
-    [ForeignKey("IdAcudiente")]
-    public virtual Usuario  Usuario { get; set; }
-    [ForeignKey("IdJardin")]
-    public virtual Jardin Jardin { get; set; }
-    
+    [Required(ErrorMessage = "Campo obligatorio")]
+    [Display(Name = "Jardin")]
+    public int JardinId { get; set; } 
+
+
+
     public virtual ICollection<RegistroAsistencia> RegistrosAsistencia { get; set; } = new List<RegistroAsistencia>();
 
     public virtual ICollection<RegistroAvanceAcademico> RegistrosAvanceAcademicos { get; set; } = new List<RegistroAvanceAcademico>();
