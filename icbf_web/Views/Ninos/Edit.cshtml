@@ -13,29 +13,37 @@
         <form asp-action="Edit">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <input type="hidden" asp-for="IdNino" />
+
+            <div class="form-group">
+                <label asp-for="Nuip" class="control-label"></label>
+                <input asp-for="Nuip" class="form-control" readonly/>
+                <span asp-validation-for="Nuip" class="text-danger"></span>
+            </div>
             <div class="form-group">
                 <label asp-for="NombreNino" class="control-label"></label>
-                <input asp-for="NombreNino" class="form-control" />
+                <input asp-for="NombreNino" class="form-control" readonly />
                 <span asp-validation-for="NombreNino" class="text-danger"></span>
             </div>
             <div class="form-group">
                 <label asp-for="FechaNacimientoNino" class="control-label"></label>
-                <input asp-for="FechaNacimientoNino" class="form-control" />
+                <input asp-for="FechaNacimientoNino" class="form-control" readonly />
                 <span asp-validation-for="FechaNacimientoNino" class="text-danger"></span>
             </div>
             <div class="form-group">
                 <label asp-for="TipoSangreNino" class="control-label"></label>
-                <input asp-for="TipoSangreNino" class="form-control" />
+                <input asp-for="TipoSangreNino" class="form-control" readonly />
                 <span asp-validation-for="TipoSangreNino" class="text-danger"></span>
             </div>
             <div class="form-group">
                 <label asp-for="CiudadNacimientoNino" class="control-label"></label>
-                <input asp-for="CiudadNacimientoNino" class="form-control" />
+                <input asp-for="CiudadNacimientoNino" class="form-control" readonly />
                 <span asp-validation-for="CiudadNacimientoNino" class="text-danger"></span>
             </div>
             <div class="form-group">
                 <label asp-for="UsuarioId" class="control-label"></label>
-                <select asp-for="UsuarioId" class="form-control" asp-items="ViewBag.UsuarioId"></select>
+                <select asp-for="UsuarioId" class="form-control" asp-items="ViewBag.Usuarios">
+                    <option value="">Seleccione un acudiente</option>
+                </select>
                 <span asp-validation-for="UsuarioId" class="text-danger"></span>
             </div>
             <div class="form-group">
@@ -55,7 +63,9 @@
             </div>
             <div class="form-group">
                 <label asp-for="JardinId" class="control-label"></label>
-                <select asp-for="JardinId" class="form-control" asp-items="ViewBag.JardinId"></select>
+                <select asp-for="JardinId" class="form-control" asp-items="ViewBag.Jardines">
+                    <option value="">Seleccione un niño</option>
+                </select>
                 <span asp-validation-for="JardinId" class="text-danger"></span>
             </div>
             <div class="form-group">

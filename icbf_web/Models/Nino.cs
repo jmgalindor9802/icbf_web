@@ -8,9 +8,11 @@ namespace icbf_web.Models;
 public partial class Nino
 {
     [Key]
-    [Required(ErrorMessage ="Campo obligatorio")]
-    [Display(Name = "NUIP")]
     public long IdNino { get; set; }
+    [Required(ErrorMessage = "Campo obligatorio")]
+    [Display(Name = "NUIP")]
+    public long Nuip { get; set; }
+
     [Required(ErrorMessage = "Campo obligatorio")]
     [Display(Name = "Nombre")]
     public string NombreNino { get; set; } = null!;
