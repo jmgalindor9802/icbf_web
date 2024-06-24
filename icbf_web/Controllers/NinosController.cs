@@ -90,6 +90,10 @@ namespace icbf_web.Controllers
             {
                 return NotFound();
             }
+            // Configurar ViewBag con usuarios y jardines
+            ViewBag.Usuarios = new SelectList(await _userManager.Users.ToListAsync(), "Id", "Nombres", nino.UsuarioId);
+            ViewBag.Jardines = new SelectList(await _context.Jardines.ToListAsync(), "IdJardin", "NombreJardin", nino.JardinId);
+
             return View(nino);
         }
 

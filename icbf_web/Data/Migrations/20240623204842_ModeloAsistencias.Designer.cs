@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using icbf_web.Data;
 
@@ -11,9 +12,11 @@ using icbf_web.Data;
 namespace icbf_web.Data.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20240623204842_ModeloAsistencias")]
+    partial class ModeloAsistencias
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -182,7 +185,7 @@ namespace icbf_web.Data.Migrations
 
                     b.HasKey("IdJardin");
 
-                    b.ToTable("Jardines", (string)null);
+                    b.ToTable("Jardines");
                 });
 
             modelBuilder.Entity("icbf_web.Models.Nino", b =>
@@ -232,7 +235,7 @@ namespace icbf_web.Data.Migrations
 
                     b.HasIndex("UsuarioId");
 
-                    b.ToTable("Ninos", (string)null);
+                    b.ToTable("Ninos");
                 });
 
             modelBuilder.Entity("icbf_web.Models.RegistroAsistencia", b =>
@@ -247,17 +250,20 @@ namespace icbf_web.Data.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<DateOnly>("FechaRegistro")
-                        .HasColumnType("date");
+                    b.Property<DateTime>("FechaRegistro")
+                        .HasColumnType("datetime2");
 
-                    b.Property<long>("NinoId")
+                    b.Property<long>("IdNino")
+                        .HasColumnType("bigint");
+
+                    b.Property<long>("NinoIdNino")
                         .HasColumnType("bigint");
 
                     b.HasKey("IdRegistroAsistencia");
 
-                    b.HasIndex("NinoId");
+                    b.HasIndex("NinoIdNino");
 
-                    b.ToTable("RegistrosAsistencia", (string)null);
+                    b.ToTable("RegistrosAsistencia");
                 });
 
             modelBuilder.Entity("icbf_web.Models.RegistroAvanceAcademico", b =>
@@ -296,7 +302,7 @@ namespace icbf_web.Data.Migrations
 
                     b.HasIndex("IdNinoNavigationIdNino");
 
-                    b.ToTable("RegistrosAvanceAcademicos", (string)null);
+                    b.ToTable("RegistrosAvanceAcademicos");
                 });
 
             modelBuilder.Entity("icbf_web.Models.Usuario", b =>
@@ -462,7 +468,7 @@ namespace icbf_web.Data.Migrations
                 {
                     b.HasOne("icbf_web.Models.Nino", "Nino")
                         .WithMany("RegistrosAsistencia")
-                        .HasForeignKey("NinoId")
+                        .HasForeignKey("NinoIdNino")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
