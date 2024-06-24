@@ -5,38 +5,43 @@ namespace icbf_web.Models
     public class CreateUsuarioViewModel
     {
 
-        [Required(ErrorMessage ="Campo obligatorio")]
+        [Required(ErrorMessage = "El campo Nombres es obligatorio.")]
+        [MaxLength(50, ErrorMessage = "El nombre debe tener un máximo de 50 caracteres.")]
         [Display(Name = "Nombres")]
         public string Nombres { get; set; }
 
-        [Required(ErrorMessage = "Campo obligatorio")]
+        [Required(ErrorMessage = "El campo Dirección es obligatorio.")]
+        [MaxLength(255, ErrorMessage = "La dirección debe tener un máximo de 255 caracteres.")]
         [Display(Name = "Dirección")]
         public string Direccion { get; set; }
 
-        [Required(ErrorMessage = "Campo obligatorio")]
-        [Display(Name = "Cedula")]
+        [Required(ErrorMessage = "El campo Cédula es obligatorio.")]
+        [RegularExpression(@"^\d{7,10}$", ErrorMessage = "La cédula debe tener entre 7 y 10 dígitos.")]
+        [Display(Name = "Cédula")]
         public long Cedula { get; set; }
 
-        [Required(ErrorMessage = "Campo obligatorio")]
-        [Display(Name = "Telefono")]
-        
+        [Required(ErrorMessage = "El campo Teléfono es obligatorio.")]
+        [RegularExpression(@"^\d{10}$", ErrorMessage = "El teléfono debe tener 10 dígitos.")]
+        [Display(Name = "Teléfono")]
         public long Telefono { get; set; }
+
+        [Required(ErrorMessage = "El campo Estado es obligatorio.")]
         [Display(Name = "Estado")]
-        [Required(ErrorMessage = "Campo obligatorio")]
         public bool Estado { get; set; }
-        [Display(Name = "Fecha de Nacimiento")]    
-        [Required(ErrorMessage = "Campo obligatorio")] 
+
+        [Required(ErrorMessage = "El campo Fecha de Nacimiento es obligatorio.")]
+        [Display(Name = "Fecha de Nacimiento")]
         public DateTime FechaNacimiento { get; set; }
         [Display(Name = "Jardín")]
         
         public int? IdJardin { get; set; }
+        [Required(ErrorMessage = "El campo Rol es obligatorio.")]
         [Display(Name = "Rol")]
-        [Required(ErrorMessage = "Campo obligatorio")] 
         public string Role { get; set; }
 
-        [Required(ErrorMessage = "Campo obligatorio")] 
-
-        [EmailAddress]
+        [Required(ErrorMessage = "El campo Email es obligatorio.")]
+        [RegularExpression(@"^\w+[\w.-]*@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$", ErrorMessage = "El formato del correo electrónico no es válido.")]
+        [EmailAddress(ErrorMessage = "El correo electrónico no es válido.")]
         [Display(Name = "Email")]
         public string Email { get; set; }
 
@@ -47,10 +52,9 @@ namespace icbf_web.Models
         [Display(Name = "Contraseña")]
         public string Password { get; set; }
 
-        [Required(ErrorMessage = "Campo obligatorio")] 
-
-        [Display(Name = "Confirmar contraseña")]
-        [Compare("Password", ErrorMessage = "El password y la confirmación del password no coinciden.")]
+        [Required(ErrorMessage = "El campo Confirmar Contraseña es obligatorio.")]
+        [Compare("Password", ErrorMessage = "La contraseña y la confirmación de la contraseña no coinciden.")]
+        [Display(Name = "Confirmar Contraseña")]
         public string ConfirmPassword { get; set; }
 
      

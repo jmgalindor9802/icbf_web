@@ -46,6 +46,7 @@ namespace icbf_web.Controllers
         // GET: Jardin/Create
         public IActionResult Create()
         {
+            EstadoJardin();
             return View();
         }
 
@@ -62,6 +63,7 @@ namespace icbf_web.Controllers
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
+            EstadoJardin();
             return View(jardin);
         }
 
@@ -78,6 +80,7 @@ namespace icbf_web.Controllers
             {
                 return NotFound();
             }
+            EstadoJardin();
             return View(jardin);
         }
 
@@ -113,6 +116,7 @@ namespace icbf_web.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
+            EstadoJardin();
             return View(jardin);
         }
 
@@ -152,6 +156,16 @@ namespace icbf_web.Controllers
         private bool JardinExists(int id)
         {
             return _context.Jardines.Any(e => e.IdJardin == id);
+        }
+        private void EstadoJardin()
+        {
+            ViewBag.EstadoJardin = new List<SelectListItem>
+            {
+                new SelectListItem { Text = "Seleccione un estado", Value = ""},
+                new SelectListItem { Text = "Aprobado", Value = "Aprobado" },
+                new SelectListItem { Text = "En tramite", Value = "En tramite" },
+                new SelectListItem { Text = "Negado", Value = "Negado" }
+            };
         }
     }
 }
