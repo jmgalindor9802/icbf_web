@@ -4,23 +4,22 @@
     ViewData["Title"] = "Edit";
 }
 
-<h1>Edit</h1>
-
-<h4>RegistroAsistencia</h4>
+<h1>Agregar Registro de Asistencia</h1>
 <hr />
-<div class="row">
+<div class="row justify-content-center">
     <div class="col-md-4">
-        <form asp-action="Edit">
+        <form id="registroForm" asp-action="Create">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <input type="hidden" asp-for="IdRegistroAsistencia" />
             <div class="form-group">
                 <label asp-for="FechaRegistro" class="control-label"></label>
-                <input asp-for="FechaRegistro" class="form-control" />
+                <input asp-for="FechaRegistro" class="form-control" type="date" id="FechaRegistro" />
                 <span asp-validation-for="FechaRegistro" class="text-danger"></span>
+                <span id="fechaError" class="text-danger"></span> <!-- Span para mostrar el mensaje de error -->
             </div>
             <div class="form-group">
                 <label asp-for="EstadoNinoRegistro" class="control-label"></label>
-                <input asp-for="EstadoNinoRegistro" class="form-control" />
+                <select asp-for="EstadoNinoRegistro" class="form-control" asp-items="ViewBag.EstadoNinoRegistro"></select>
                 <span asp-validation-for="EstadoNinoRegistro" class="text-danger"></span>
             </div>
             <div class="form-group">
@@ -30,17 +29,35 @@
                 </select>
                 <span asp-validation-for="NinoId" class="text-danger"></span>
             </div>
-            <div class="form-group">
-                <input type="submit" value="Save" class="btn btn-primary" />
+            <div class="row justify-content-center mt-3">
+                <div class="col-md-6 text-center">
+                    <input type="submit" value="Actualizar" class="btn btn-primary mr-5" />
+                    <a asp-action="Index" class="btn btn-danger">Cancelar</a>
+                </div>
             </div>
         </form>
     </div>
 </div>
 
-<div>
-    <a asp-action="Index">Back to List</a>
-</div>
-
 @section Scripts {
-    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+    
+    <script>
+        $(document).ready(function () {
+            $('#registroForm').submit(function (e) {
+                var selectedDate = new Date($('#FechaRegistro').val());
+                var today = new Date();
+                today.setHours(0, 0, 0, 0);
+
+                if (selectedDate > today) {
+                    $('#fechaError').text("La fecha seleccionada no puede ser mayor a la fecha actual.");
+                    e.preventDefault(); // Previene que el formulario sea enviado
+                } else {
+                    $('#fechaError').text(""); // Limpia el mensaje de error si la fecha es válida
+                }
+            });
+        });
+    </script>
 }
