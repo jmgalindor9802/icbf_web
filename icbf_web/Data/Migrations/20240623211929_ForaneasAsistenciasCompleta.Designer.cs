@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using icbf_web.Data;
 
@@ -11,9 +12,11 @@ using icbf_web.Data;
 namespace icbf_web.Data.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20240623211929_ForaneasAsistenciasCompleta")]
+    partial class ForaneasAsistenciasCompleta
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -215,9 +218,6 @@ namespace icbf_web.Data.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<long>("Nuip")
-                        .HasColumnType("bigint");
-
                     b.Property<long>("TelefonoNino")
                         .HasColumnType("bigint");
 
@@ -250,8 +250,8 @@ namespace icbf_web.Data.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<DateOnly>("FechaRegistro")
-                        .HasColumnType("date");
+                    b.Property<DateTime>("FechaRegistro")
+                        .HasColumnType("datetime2");
 
                     b.Property<long>("NinoId")
                         .HasColumnType("bigint");
@@ -281,7 +281,10 @@ namespace icbf_web.Data.Migrations
                     b.Property<DateOnly>("FechaEntregaAvance")
                         .HasColumnType("date");
 
-                    b.Property<long>("NinoId")
+                    b.Property<long>("IdNino")
+                        .HasColumnType("bigint");
+
+                    b.Property<long>("IdNinoNavigationIdNino")
                         .HasColumnType("bigint");
 
                     b.Property<string>("NivelAvance")
@@ -294,7 +297,7 @@ namespace icbf_web.Data.Migrations
 
                     b.HasKey("IdAvance");
 
-                    b.HasIndex("NinoId");
+                    b.HasIndex("IdNinoNavigationIdNino");
 
                     b.ToTable("RegistrosAvanceAcademicos");
                 });
@@ -460,20 +463,24 @@ namespace icbf_web.Data.Migrations
 
             modelBuilder.Entity("icbf_web.Models.RegistroAsistencia", b =>
                 {
-                    b.HasOne("icbf_web.Models.Nino", null)
+                    b.HasOne("icbf_web.Models.Nino", "Nino")
                         .WithMany("RegistrosAsistencia")
                         .HasForeignKey("NinoId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
+
+                    b.Navigation("Nino");
                 });
 
             modelBuilder.Entity("icbf_web.Models.RegistroAvanceAcademico", b =>
                 {
-                    b.HasOne("icbf_web.Models.Nino", null)
+                    b.HasOne("icbf_web.Models.Nino", "IdNinoNavigation")
                         .WithMany("RegistrosAvanceAcademicos")
-                        .HasForeignKey("NinoId")
+                        .HasForeignKey("IdNinoNavigationIdNino")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
+
+                    b.Navigation("IdNinoNavigation");
                 });
 
             modelBuilder.Entity("icbf_web.Models.Usuario", b =>

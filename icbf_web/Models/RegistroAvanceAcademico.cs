@@ -9,8 +9,8 @@ public partial class RegistroAvanceAcademico
     [Key]
     public int IdAvance { get; set; }
     [Required(ErrorMessage = "Campo obligatorio")]
-    [Display(Name = "NUIP")]
-    public long IdNino { get; set; }
+    [Display(Name = "Niño")]
+    public long NinoId { get; set; }
     [Required(ErrorMessage = "Campo obligatorio")]
     [Display(Name = "Año escolar")]
     public int AnioEscolarAvance { get; set; }
@@ -26,6 +26,4 @@ public partial class RegistroAvanceAcademico
     [Required(ErrorMessage = "Campo obligatorio")]
     [Display(Name = "Fecha de entrega")]
     public DateOnly FechaEntregaAvance { get; set; }
-
-    public virtual Nino IdNinoNavigation { get; set; } = null!;
 }

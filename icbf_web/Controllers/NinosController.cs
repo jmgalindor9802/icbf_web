@@ -63,7 +63,7 @@ namespace icbf_web.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("IdNino,NombreNino,FechaNacimientoNino,TipoSangreNino,CiudadNacimientoNino,UsuarioId,TelefonoNino,DireccionNino,EpsNino,JardinId")] Nino nino)
+        public async Task<IActionResult> Create([Bind("IdNino,Nuip,NombreNino,FechaNacimientoNino,TipoSangreNino,CiudadNacimientoNino,UsuarioId,TelefonoNino,DireccionNino,EpsNino,JardinId")] Nino nino)
         {
             if (ModelState.IsValid)
             {
@@ -90,6 +90,10 @@ namespace icbf_web.Controllers
             {
                 return NotFound();
             }
+            // Configurar ViewBag con usuarios y jardines
+            ViewBag.Usuarios = new SelectList(await _userManager.Users.ToListAsync(), "Id", "Nombres", nino.UsuarioId);
+            ViewBag.Jardines = new SelectList(await _context.Jardines.ToListAsync(), "IdJardin", "NombreJardin", nino.JardinId);
+
             return View(nino);
         }
 
@@ -98,7 +102,7 @@ namespace icbf_web.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(long id, [Bind("IdNino,NombreNino,FechaNacimientoNino,TipoSangreNino,CiudadNacimientoNino,UsuarioId,TelefonoNino,DireccionNino,EpsNino,JardinId")] Nino nino)
+        public async Task<IActionResult> Edit(long id, [Bind("IdNino,Nuip,NombreNino,FechaNacimientoNino,TipoSangreNino,CiudadNacimientoNino,UsuarioId,TelefonoNino,DireccionNino,EpsNino,JardinId")] Nino nino)
         {
             if (id != nino.IdNino)
             {
@@ -125,6 +129,8 @@ namespace icbf_web.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
+            ViewBag.Usuarios = new SelectList(await _userManager.Users.ToListAsync(), "Id", "Nombres", nino.UsuarioId);
+            ViewBag.Jardines = new SelectList(await _context.Jardines.ToListAsync(), "IdJardin", "NombreJardin", nino.JardinId);
             return View(nino);
         }
 

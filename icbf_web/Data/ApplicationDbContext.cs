@@ -1,6 +1,7 @@
 ﻿using icbf_web.Models;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
+using System.Reflection.Emit;
 
 namespace icbf_web.Data
 {
@@ -17,9 +18,12 @@ namespace icbf_web.Data
             builder.Entity<Usuario>(entityTypeBuilder =>
             {
                 entityTypeBuilder.ToTable("Usuarios");
-
             });
+
+        
         }
+
+      
 
         public DbSet<Jardin> Jardines { get; set; }
 

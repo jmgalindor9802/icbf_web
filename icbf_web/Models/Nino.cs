@@ -8,12 +8,12 @@ namespace icbf_web.Models;
 public partial class Nino
 {
     [Key]
-    [Required(ErrorMessage = "El campo NUIP es obligatorio.")]
-    [RegularExpression(@"^\d{10}$", ErrorMessage = "El NUIP debe tener 10 dígitos.")]
-    [Display(Name = "NUIP")]
     public long IdNino { get; set; }
-    [Required(ErrorMessage = "El campo Nombre es obligatorio.")]
-    [MaxLength(50, ErrorMessage = "El nombre debe tener un máximo de 50 caracteres.")]
+    [Required(ErrorMessage = "Campo obligatorio")]
+    [Display(Name = "NUIP")]
+    public long Nuip { get; set; }
+
+    [Required(ErrorMessage = "Campo obligatorio")]
     [Display(Name = "Nombre")]
     public string NombreNino { get; set; } = null!;
     [Required(ErrorMessage = "El campo Fecha de Nacimiento es obligatorio.")]
