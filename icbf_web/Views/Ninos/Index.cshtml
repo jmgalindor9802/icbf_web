@@ -9,6 +9,17 @@
 <p>
     <a asp-action="Create" class="btn btn-success">Agregar niño</a>
 </p>
+<p>
+    <!-- Agregar un formulario o enlace para filtrar por jardín -->
+    <form asp-action="IndexPorJardin" method="get">
+        <label for="jardinId">Filtrar por Jardín:</label>
+        
+        <select name="idJardin" id="jardinId" class="form-control" asp-items="ViewBag.Jardines">
+            <option value="">Seleccione un jardín</option>
+        </select>
+        <button type="submit" class="btn btn-primary">Filtrar</button>
+    </form>
+</p>
 <table class="table table-bordered">
     <thead class="table-light">
         <tr>

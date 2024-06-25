@@ -7,16 +7,21 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using icbf_web.Data;
 using icbf_web.Models;
+using DinkToPdf.Contracts;
+using DinkToPdf;
+using Microsoft.AspNetCore.Http.Extensions;
 
 namespace icbf_web.Controllers
 {
     public class JardinController : Controller
     {
         private readonly ApplicationDbContext _context;
+        private readonly IConverter _converter;
 
-        public JardinController(ApplicationDbContext context)
+        public JardinController(ApplicationDbContext context, IConverter converter)
         {
             _context = context;
+            _converter = converter;
         }
 
         // GET: Jardin
@@ -24,7 +29,67 @@ namespace icbf_web.Controllers
         {
             return View(await _context.Jardines.ToListAsync());
         }
+        public async Task<IActionResult> NoAprobados()
+        {
+            var jardinesNoAprobados = await _context.Jardines
+                .Where(j => j.EstadoJardin == "Negado") // Filtra por estado "Negado"
+                .ToListAsync();
 
+            return View("Index", jardinesNoAprobados);
+        }
+
+        public IActionResult MostrarPDFenPagina()
+        {
+            string pagina_actual = HttpContext.Request.Path;
+            string url_pagina = HttpContext.Request.GetEncodedUrl();
+            url_pagina = url_pagina.Replace(pagina_actual, "");
+            url_pagina = $"{url_pagina}/Jardin/NoAprobados";
+
+            var pdf = new HtmlToPdfDocument()
+            {
+                GlobalSettings = new GlobalSettings()
+                {
+                    PaperSize = PaperKind.A4,
+                    Orientation = Orientation.Portrait
+                },
+                Objects = {
+                    new ObjectSettings(){
+                        Page = url_pagina
+                    }
+                }
+            };
+
+            var archivoPDF = _converter.Convert(pdf);
+
+            return File(archivoPDF, "application/pdf");
+        }
+
+        public IActionResult DescargarPDF()
+        {
+            string pagina_actual = HttpContext.Request.Path;
+            string url_pagina = HttpContext.Request.GetEncodedUrl();
+            url_pagina = url_pagina.Replace(pagina_actual, "");
+            url_pagina = $"{url_pagina}/Jardin/NoAprobados";
+
+            var pdf = new HtmlToPdfDocument()
+            {
+                GlobalSettings = new GlobalSettings()
+                {
+                    PaperSize = PaperKind.A4,
+                    Orientation = Orientation.Portrait
+                },
+                Objects = {
+                    new ObjectSettings(){
+                        Page = url_pagina
+                    }
+                }
+            };
+
+            var archivoPDF = _converter.Convert(pdf);
+            string nombrePDF = "reporte_" + DateTime.Now.ToString("ddMMyyyyHHmmss") + ".pdf";
+
+            return File(archivoPDF, "application/pdf", nombrePDF);
+        }
         // GET: Jardin/Details/5
         public async Task<IActionResult> Details(int? id)
         {

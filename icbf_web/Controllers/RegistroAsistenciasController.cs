@@ -7,18 +7,24 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using icbf_web.Data;
 using icbf_web.Models;
+using DinkToPdf;
+using Microsoft.AspNetCore.Http.Extensions;
+using DinkToPdf.Contracts;
 
 namespace icbf_web.Controllers
 {
     public class RegistroAsistenciasController : Controller
     {
         private readonly ApplicationDbContext _context;
+        private readonly IConverter _converter;
 
-        public RegistroAsistenciasController(ApplicationDbContext context)
+        public RegistroAsistenciasController(ApplicationDbContext context, IConverter converter)
         {
             _context = context;
+            _converter = converter;
         }
 
+        // GET: RegistroAsistencias
         // GET: RegistroAsistencias
         public async Task<IActionResult> Index()
         {
@@ -28,6 +34,68 @@ namespace icbf_web.Controllers
             return View(await _context.RegistrosAsistencia.ToListAsync());
         }
 
+        public async Task<IActionResult> NinosEnfermos()
+        {
+            var asistenciaNinosEnfermos = await _context.RegistrosAsistencia
+                .Where(j => j.EstadoNinoRegistro == "Enfermo") // Filtra por estado "Negado"
+                .ToListAsync();
+
+            return View("Index", asistenciaNinosEnfermos);
+        }
+
+
+        public IActionResult MostrarPDFenPagina()
+        {
+            string pagina_actual = HttpContext.Request.Path;
+            string url_pagina = HttpContext.Request.GetEncodedUrl();
+            url_pagina = url_pagina.Replace(pagina_actual, "");
+            url_pagina = $"{url_pagina}/RegistroAsistencias/NinosEnfermos";
+
+            var pdf = new HtmlToPdfDocument()
+            {
+                GlobalSettings = new GlobalSettings()
+                {
+                    PaperSize = PaperKind.A4,
+                    Orientation = Orientation.Portrait
+                },
+                Objects = {
+                    new ObjectSettings(){
+                        Page = url_pagina
+                    }
+                }
+            };
+
+            var archivoPDF = _converter.Convert(pdf);
+
+            return File(archivoPDF, "application/pdf");
+        }
+
+        public IActionResult DescargarPDF()
+        {
+            string pagina_actual = HttpContext.Request.Path;
+            string url_pagina = HttpContext.Request.GetEncodedUrl();
+            url_pagina = url_pagina.Replace(pagina_actual, "");
+            url_pagina = $"{url_pagina}/RegistroAsistencias/NinosEnfermos";
+
+            var pdf = new HtmlToPdfDocument()
+            {
+                GlobalSettings = new GlobalSettings()
+                {
+                    PaperSize = PaperKind.A4,
+                    Orientation = Orientation.Portrait
+                },
+                Objects = {
+                    new ObjectSettings(){
+                        Page = url_pagina
+                    }
+                }
+            };
+
+            var archivoPDF = _converter.Convert(pdf);
+            string nombrePDF = "reporte_" + DateTime.Now.ToString("ddMMyyyyHHmmss") + ".pdf";
+
+            return File(archivoPDF, "application/pdf", nombrePDF);
+        }
         // GET: RegistroAsistencias/Details/5
         public async Task<IActionResult> Details(int? id)
         {
