@@ -11,6 +11,7 @@ public partial class RegistroAvanceAcademico
     [Required(ErrorMessage = "Campo obligatorio")]
     [Display(Name = "Niño")]
     public long NinoId { get; set; }
+    public virtual Nino Nino { get; set; }
     [Required(ErrorMessage = "Campo obligatorio")]
     [Display(Name = "Año escolar")]
     public int AnioEscolarAvance { get; set; }

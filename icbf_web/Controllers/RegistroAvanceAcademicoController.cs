@@ -22,12 +22,18 @@ namespace icbf_web.Controllers
         // GET: RegistroAvanceAcademico
         public async Task<IActionResult> Index()
         {
+            var registros = await _context.RegistrosAsistencia
+                             .Include(ra => ra.Nino) // Incluir la entidad Nino
+                             .ToListAsync();
             return View(await _context.RegistrosAvanceAcademicos.ToListAsync());
         }
 
         // GET: RegistroAvanceAcademico/Details/5
         public async Task<IActionResult> Details(int? id)
         {
+            var registros = await _context.RegistrosAsistencia
+                             .Include(ra => ra.Nino) // Incluir la entidad Nino
+                             .ToListAsync();
             if (id == null)
             {
                 return NotFound();
