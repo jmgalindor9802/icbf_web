@@ -1,6 +1,9 @@
-﻿using icbf_web.Data;
+﻿using DinkToPdf;
+using DinkToPdf.Contracts;
+using icbf_web.Data;
 using icbf_web.Models;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Http.Extensions;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
@@ -17,11 +20,13 @@ namespace icbf_web.Controllers
         private readonly ApplicationDbContext _context;
         private readonly UserManager<Usuario> _userManager;
         private readonly RoleManager<IdentityRole> _roleManager;
-        public UsuariosController(ApplicationDbContext context, UserManager<Usuario> userManager, RoleManager<IdentityRole> roleManager)
+        private readonly IConverter _converter;
+        public UsuariosController(ApplicationDbContext context, UserManager<Usuario> userManager, RoleManager<IdentityRole> roleManager, IConverter converter)
         {
             _context = context;
             _userManager = userManager;
             _roleManager = roleManager;
+            _converter = converter;
         }
 
         // GET: Usuarios
@@ -45,6 +50,59 @@ namespace icbf_web.Controllers
             }
 
             return View(usuariosConRoles);
+        }
+
+        public IActionResult MostrarPDFenPagina()
+        {
+            string pagina_actual = HttpContext.Request.Path;
+            string url_pagina = HttpContext.Request.GetEncodedUrl();
+            url_pagina = url_pagina.Replace(pagina_actual, "");
+            url_pagina = $"{url_pagina}/Usuarios/Index";
+
+            var pdf = new HtmlToPdfDocument()
+            {
+                GlobalSettings = new GlobalSettings()
+                {
+                    PaperSize = PaperKind.A4,
+                    Orientation = Orientation.Portrait
+                },
+                Objects = {
+                    new ObjectSettings(){
+                        Page = url_pagina
+                    }
+                }
+            };
+
+            var archivoPDF = _converter.Convert(pdf);
+
+            return File(archivoPDF, "application/pdf");
+        }
+
+        public IActionResult DescargarPDF()
+        {
+            string pagina_actual = HttpContext.Request.Path;
+            string url_pagina = HttpContext.Request.GetEncodedUrl();
+            url_pagina = url_pagina.Replace(pagina_actual, "");
+            url_pagina = $"{url_pagina}/Usuarios/Index";
+
+            var pdf = new HtmlToPdfDocument()
+            {
+                GlobalSettings = new GlobalSettings()
+                {
+                    PaperSize = PaperKind.A4,
+                    Orientation = Orientation.Portrait
+                },
+                Objects = {
+                    new ObjectSettings(){
+                        Page = url_pagina
+                    }
+                }
+            };
+
+            var archivoPDF = _converter.Convert(pdf);
+            string nombrePDF = "reporte_" + DateTime.Now.ToString("ddMMyyyyHHmmss") + ".pdf";
+
+            return File(archivoPDF, "application/pdf", nombrePDF);
         }
         // GET: Usuarios/Details/5
         public async Task<IActionResult> Details(string id)
