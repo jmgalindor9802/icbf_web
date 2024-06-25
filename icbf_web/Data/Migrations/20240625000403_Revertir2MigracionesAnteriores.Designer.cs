@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using icbf_web.Data;
 
@@ -11,9 +12,11 @@ using icbf_web.Data;
 namespace icbf_web.Data.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20240625000403_Revertir2MigracionesAnteriores")]
+    partial class Revertir2MigracionesAnteriores
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -320,6 +323,7 @@ namespace icbf_web.Data.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Direccion")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Email")
@@ -348,6 +352,7 @@ namespace icbf_web.Data.Migrations
                         .HasColumnType("datetimeoffset");
 
                     b.Property<string>("Nombres")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("NormalizedEmail")
@@ -463,13 +468,11 @@ namespace icbf_web.Data.Migrations
 
             modelBuilder.Entity("icbf_web.Models.RegistroAsistencia", b =>
                 {
-                    b.HasOne("icbf_web.Models.Nino", "Nino")
+                    b.HasOne("icbf_web.Models.Nino", null)
                         .WithMany("RegistrosAsistencia")
                         .HasForeignKey("NinoId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
-
-                    b.Navigation("Nino");
                 });
 
             modelBuilder.Entity("icbf_web.Models.RegistroAvanceAcademico", b =>
