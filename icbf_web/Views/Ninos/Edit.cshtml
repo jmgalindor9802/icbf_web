@@ -4,72 +4,101 @@
     ViewData["Title"] = "Edit";
 }
 
-<h1>Edit</h1>
+<h1>Editar registro</h1>
 
-<h4>Nino</h4>
 <hr />
-<div class="row">
-    <div class="col-md-4">
+<div class="row justify-content-center">
+    <div class="col-md-8">
         <form asp-action="Edit">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <input type="hidden" asp-for="IdNino" />
 
-            <div class="form-group">
-                <label asp-for="Nuip" class="control-label"></label>
-                <input asp-for="Nuip" class="form-control" readonly/>
-                <span asp-validation-for="Nuip" class="text-danger"></span>
+            <div class="row">
+                <div class="col-md-3">
+                    <div class="form-group">
+                        <label asp-for="Nuip" class="control-label"></label>
+                        <input asp-for="Nuip" class="form-control" />
+                        <span asp-validation-for="Nuip" class="text-danger"></span>
+                    </div>
+                </div>
+                <div class="col-md-3">
+                    <div class="form-group">
+                        <label asp-for="NombreNino" class="control-label"></label>
+                        <input asp-for="NombreNino" class="form-control" />
+                        <span asp-validation-for="NombreNino" class="text-danger"></span>
+                    </div>
+                </div>
+                <div class="col-md-3">
+                    <div class="form-group">
+                        <label asp-for="FechaNacimientoNino" class="control-label"></label>
+                        <input asp-for="FechaNacimientoNino" id="FecNacVal" class="form-control" />
+                        <span asp-validation-for="FechaNacimientoNino" class="text-danger"></span>
+                        <span id="validacionRangoEdad" class="text-danger"></span>
+                    </div>
+                </div>
+                <div class="col-md-3">
+                    <div class="form-group">
+                        <label asp-for="TipoSangreNino" class="control-label"></label>
+                        <select asp-for="TipoSangreNino" class="form-control" asp-items="ViewBag.TipoSangreNino"></select>
+                        <span asp-validation-for="TipoSangreNino" class="text-danger"></span>
+                    </div>
+                </div>
             </div>
-            <div class="form-group">
-                <label asp-for="NombreNino" class="control-label"></label>
-                <input asp-for="NombreNino" class="form-control" readonly />
-                <span asp-validation-for="NombreNino" class="text-danger"></span>
+            <div class="row">
+                <div class="col-md-3">
+                    <div class="form-group">
+                        <label asp-for="CiudadNacimientoNino" class="control-label"></label>
+                        <input asp-for="CiudadNacimientoNino" class="form-control" />
+                        <span asp-validation-for="CiudadNacimientoNino" class="text-danger"></span>
+                    </div>
+                </div>
+                <div class="col-md-3">
+                    <div class="form-group">
+                        <label asp-for="DireccionNino" class="control-label"></label>
+                        <input asp-for="DireccionNino" class="form-control" />
+                        <span asp-validation-for="DireccionNino" class="text-danger"></span>
+                    </div>
+                </div>
+                <div class="col-md-3">
+                    <div class="form-group">
+                        <label asp-for="TelefonoNino" class="control-label"></label>
+                        <input asp-for="TelefonoNino" class="form-control" />
+                        <span asp-validation-for="TelefonoNino" class="text-danger"></span>
+                    </div>
+                </div>
+                <div class="col-md-3">
+                    <div class="form-group">
+                        <label asp-for="EpsNino" class="control-label"></label>
+                        <input asp-for="EpsNino" class="form-control" />
+                        <span asp-validation-for="EpsNino" class="text-danger"></span>
+                    </div>
+                </div>
             </div>
-            <div class="form-group">
-                <label asp-for="FechaNacimientoNino" class="control-label"></label>
-                <input asp-for="FechaNacimientoNino" class="form-control" readonly />
-                <span asp-validation-for="FechaNacimientoNino" class="text-danger"></span>
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label asp-for="UsuarioId" class="control-label"></label>
+                        <select asp-for="UsuarioId" class="form-control" asp-items="ViewBag.Usuarios">
+                            <option value="">Seleccione un acudiente</option>
+                        </select>
+                        <span asp-validation-for="UsuarioId" class="text-danger"></span>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label asp-for="JardinId" class="control-label"></label>
+                        <select asp-for="JardinId" class="form-control" asp-items="ViewBag.Jardines">
+                            <option value="">Seleccione un jardín</option>
+                        </select>
+                        <span asp-validation-for="JardinId" class="text-danger"></span>
+                    </div>
+                </div>
             </div>
-            <div class="form-group">
-                <label asp-for="TipoSangreNino" class="control-label"></label>
-                <input asp-for="TipoSangreNino" class="form-control" readonly />
-                <span asp-validation-for="TipoSangreNino" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="CiudadNacimientoNino" class="control-label"></label>
-                <input asp-for="CiudadNacimientoNino" class="form-control" readonly />
-                <span asp-validation-for="CiudadNacimientoNino" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="UsuarioId" class="control-label"></label>
-                <select asp-for="UsuarioId" class="form-control" asp-items="ViewBag.Usuarios">
-                    <option value="">Seleccione un acudiente</option>
-                </select>
-                <span asp-validation-for="UsuarioId" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="TelefonoNino" class="control-label"></label>
-                <input asp-for="TelefonoNino" class="form-control" />
-                <span asp-validation-for="TelefonoNino" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="DireccionNino" class="control-label"></label>
-                <input asp-for="DireccionNino" class="form-control" />
-                <span asp-validation-for="DireccionNino" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="EpsNino" class="control-label"></label>
-                <input asp-for="EpsNino" class="form-control" />
-                <span asp-validation-for="EpsNino" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="JardinId" class="control-label"></label>
-                <select asp-for="JardinId" class="form-control" asp-items="ViewBag.Jardines">
-                    <option value="">Seleccione un niño</option>
-                </select>
-                <span asp-validation-for="JardinId" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <input type="submit" value="Save" class="btn btn-primary" />
+            <div class="row justify-content-center mt-3">
+                <div class="col-md-6 text-center">
+                    <input type="submit" value="Actualizar" class="btn btn-success mr-5" />
+                    <a asp-action="Index" class="btn btn-danger">Cancelar</a>
+                </div>
             </div>
         </form>
     </div>
@@ -80,5 +109,37 @@
 </div>
 
 @section Scripts {
-    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+    <script>
+        $(document).ready(function () {
+            console.log("El documento está listo.");
+            $("#FecNacVal").on("change", function () {
+                console.log("El campo Fecha de Nacimiento ha cambiado.");
+                var now = new Date();
+                var birthdate = new Date($("#FecNacVal").val());
+                var nowyear = now.getFullYear();
+                var birthyear = birthdate.getFullYear();
+                var age = nowyear - birthyear;
+
+                // Ajustamos la edad si el cumpleaños aún no ha ocurrido este año
+                var m = now.getMonth() - birthdate.getMonth();
+                if (m < 0 || (m === 0 && now.getDate() < birthdate.getDate())) {
+                    age--;
+                }
+
+                console.log("Edad calculada:", age);
+
+                // Validamos el rango de edad (1-6 años)
+                if (age < 1 || age > 6) {
+                    $('#validacionRangoEdad').text('La edad debe estar entre 1 y 6 años.');
+                    console.log("La edad no está en el rango permitido.");
+                } else {
+                    $('#validacionRangoEdad').text('');
+                    console.log("La edad está en el rango permitido.");
+                }
+            });
+        });
+    </script>
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
 }

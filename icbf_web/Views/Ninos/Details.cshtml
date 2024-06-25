@@ -4,57 +4,66 @@
     ViewData["Title"] = "Details";
 }
 
-<h1>Details</h1>
+<h1>Detalles del Niño</h1>
 
-<div>
-    <h4>Nino</h4>
-    <hr />
+<hr />
+
+<div class="container">
     <dl class="row">
-        <dt class = "col-sm-2">
+        <dt class="col-sm-3">
+            @Html.DisplayNameFor(model => model.Nuip)
+        </dt>
+        <dd class="col-sm-9">
+            @Html.DisplayFor(model => model.Nuip)
+        </dd>
+        <dt class = "col-sm-3">
             @Html.DisplayNameFor(model => model.NombreNino)
         </dt>
-        <dd class = "col-sm-10">
+        <dd class = "col-sm-9">
             @Html.DisplayFor(model => model.NombreNino)
         </dd>
-        <dt class = "col-sm-2">
+        <dt class = "col-sm-3">
             @Html.DisplayNameFor(model => model.FechaNacimientoNino)
         </dt>
-        <dd class = "col-sm-10">
+        <dd class = "col-sm-9">
             @Html.DisplayFor(model => model.FechaNacimientoNino)
         </dd>
-        <dt class = "col-sm-2">
+        <dt class = "col-sm-3">
             @Html.DisplayNameFor(model => model.TipoSangreNino)
         </dt>
-        <dd class = "col-sm-10">
+        <dd class = "col-sm-9">
             @Html.DisplayFor(model => model.TipoSangreNino)
         </dd>
-        <dt class = "col-sm-2">
+        <dt class = "col-sm-3">
             @Html.DisplayNameFor(model => model.CiudadNacimientoNino)
         </dt>
-        <dd class = "col-sm-10">
+        <dd class = "col-sm-9">
             @Html.DisplayFor(model => model.CiudadNacimientoNino)
         </dd>
-        <dt class = "col-sm-2">
+        <dt class = "col-sm-3">
             @Html.DisplayNameFor(model => model.TelefonoNino)
         </dt>
-        <dd class = "col-sm-10">
+        <dd class = "col-sm-9">
             @Html.DisplayFor(model => model.TelefonoNino)
         </dd>
-        <dt class = "col-sm-2">
+        <dt class = "col-sm-3">
             @Html.DisplayNameFor(model => model.DireccionNino)
         </dt>
-        <dd class = "col-sm-10">
+        <dd class = "col-sm-9">
             @Html.DisplayFor(model => model.DireccionNino)
         </dd>
-        <dt class = "col-sm-2">
+        <dt class = "col-sm-3">
             @Html.DisplayNameFor(model => model.EpsNino)
         </dt>
-        <dd class = "col-sm-10">
+        <dd class = "col-sm-9">
             @Html.DisplayFor(model => model.EpsNino)
         </dd>
     </dl>
 </div>
 <div>
-    <a asp-action="Edit" asp-route-id="@Model?.IdNino">Edit</a> |
-    <a asp-action="Index">Back to List</a>
+    <div class="text-center mt-4">
+        <a asp-action="Edit" asp-route-id="@Model?.IdNino" class="btn btn-primary">Editar</a>
+        |
+        <a asp-action="Index" class="btn btn-secondary">Volver al Listado</a>
+    </div>
 </div>
