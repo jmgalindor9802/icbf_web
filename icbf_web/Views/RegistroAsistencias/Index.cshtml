@@ -13,9 +13,6 @@
     <thead class="table-light">
         <tr>
             <th>
-            @Html.DisplayNameFor(model => model.Nino.NombreNino)
-            </th>
-            <th>
                 @Html.DisplayNameFor(model => model.FechaRegistro)
             </th>
             <th>
@@ -27,9 +24,6 @@
     <tbody>
 @foreach (var item in Model) {
         <tr>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Nino.NombreNino)
-                </td>
             <td>
                 @Html.DisplayFor(modelItem => item.FechaRegistro)
             </td>

@@ -20,7 +20,6 @@ public partial class RegistroAsistencia
     [Display(Name = "Niño")]
 
     public long NinoId { get; set; }
-    public virtual Nino Nino { get; set; }
-
+   
 
 }

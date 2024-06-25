@@ -169,8 +169,7 @@ namespace icbf_web.Data.Migrations
 
                     b.Property<string>("DireccionJardin")
                         .IsRequired()
-                        .HasMaxLength(255)
-                        .HasColumnType("nvarchar(255)");
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("EstadoJardin")
                         .IsRequired()
@@ -196,18 +195,15 @@ namespace icbf_web.Data.Migrations
 
                     b.Property<string>("CiudadNacimientoNino")
                         .IsRequired()
-                        .HasMaxLength(255)
-                        .HasColumnType("nvarchar(255)");
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("DireccionNino")
                         .IsRequired()
-                        .HasMaxLength(255)
-                        .HasColumnType("nvarchar(255)");
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("EpsNino")
                         .IsRequired()
-                        .HasMaxLength(100)
-                        .HasColumnType("nvarchar(100)");
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<DateOnly>("FechaNacimientoNino")
                         .HasColumnType("date");
@@ -217,8 +213,7 @@ namespace icbf_web.Data.Migrations
 
                     b.Property<string>("NombreNino")
                         .IsRequired()
-                        .HasMaxLength(50)
-                        .HasColumnType("nvarchar(50)");
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<long>("Nuip")
                         .HasColumnType("bigint");
@@ -320,6 +315,7 @@ namespace icbf_web.Data.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Direccion")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Email")
@@ -348,6 +344,7 @@ namespace icbf_web.Data.Migrations
                         .HasColumnType("datetimeoffset");
 
                     b.Property<string>("Nombres")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("NormalizedEmail")
@@ -463,13 +460,11 @@ namespace icbf_web.Data.Migrations
 
             modelBuilder.Entity("icbf_web.Models.RegistroAsistencia", b =>
                 {
-                    b.HasOne("icbf_web.Models.Nino", "Nino")
+                    b.HasOne("icbf_web.Models.Nino", null)
                         .WithMany("RegistrosAsistencia")
                         .HasForeignKey("NinoId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
-
-                    b.Navigation("Nino");
                 });
 
             modelBuilder.Entity("icbf_web.Models.RegistroAvanceAcademico", b =>

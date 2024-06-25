@@ -2,7 +2,7 @@
 
   <PropertyGroup>
     <TargetFramework>net8.0</TargetFramework>
-	  <!--<Nullable>enable</Nullable>-->
+    <Nullable>enable</Nullable>
     <ImplicitUsings>enable</ImplicitUsings>
     <UserSecretsId>aspnet-icbf_web-e9a00eb9-b188-4c00-8ab8-aef6c1dcf54e</UserSecretsId>
   </PropertyGroup>
