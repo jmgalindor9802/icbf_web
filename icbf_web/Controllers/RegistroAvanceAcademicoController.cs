@@ -47,8 +47,6 @@ namespace icbf_web.Controllers
         public async Task<IActionResult> Create()
         {
             ViewBag.Ninos = new SelectList(await _context.Ninos.ToListAsync(), "IdNino", "NombreNino");
-            selectNivel();
-            selectNotas();
             return View();
         }
 
@@ -66,8 +64,6 @@ namespace icbf_web.Controllers
                 return RedirectToAction(nameof(Index));
             }
             ViewBag.Ninos = new SelectList(await _context.Ninos.ToListAsync(), "IdNino", "NombreNino");
-            selectNivel();
-            selectNotas();
             return View(registroAvanceAcademico);
         }
 
@@ -85,8 +81,6 @@ namespace icbf_web.Controllers
                 return NotFound();
             }
             ViewBag.Ninos = new SelectList(await _context.Ninos.ToListAsync(), "IdNino", "NombreNino");
-            selectNivel();
-            selectNotas();
             return View(registroAvanceAcademico);
         }
 
@@ -121,8 +115,6 @@ namespace icbf_web.Controllers
                     }
                 }
                 ViewBag.Ninos = new SelectList(await _context.Ninos.ToListAsync(), "IdNino", "NombreNino");
-                selectNivel();
-                selectNotas();
                 return RedirectToAction(nameof(Index));
             }
             return View(registroAvanceAcademico);
@@ -164,29 +156,6 @@ namespace icbf_web.Controllers
         private bool RegistroAvanceAcademicoExists(int id)
         {
             return _context.RegistrosAvanceAcademicos.Any(e => e.IdAvance == id);
-        }
-        private void selectNivel()
-        {
-            ViewBag.NivelAvance = new List<SelectListItem>
-            {
-                new SelectListItem { Text = "Seleccionar un nivel", Value = "" },
-                new SelectListItem { Text = "Natal", Value = "Natal" },
-                new SelectListItem { Text = "Prenatal", Value = "Prenatal" },
-                new SelectListItem { Text = "Parvulo", Value = "Parvulo" },
-                new SelectListItem { Text = "Jardin", Value = "Jardin" },
-                new SelectListItem { Text = "Pre-jardin", Value = "Pre-jardin" }
-            };
-        }
-        private void selectNotas()
-        {
-            ViewBag.NotaAvance = new List<SelectListItem>
-            {
-                new SelectListItem { Text = "Seleccionar una nota", Value = "" },
-                new SelectListItem { Text = "Superior", Value = "S" },
-                new SelectListItem { Text = "Alto", Value = "A" },
-                new SelectListItem { Text = "Bajo", Value = "B" }
-            };
-
         }
     }
 }

@@ -3,7 +3,6 @@ using icbf_web.Models;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using System.Linq;
 using System.Threading.Tasks;
@@ -65,10 +64,9 @@ namespace icbf_web.Controllers
         }
 
         // GET: Usuarios/Create
-        public async Task<IActionResult> Create()
+        public IActionResult Create()
         {
             var model = new CreateUsuarioViewModel();
-            ViewBag.Jardines = new SelectList(await _context.Jardines.ToListAsync(), "IdJardin", "NombreJardin");
             return View();
         }
 
@@ -110,7 +108,6 @@ namespace icbf_web.Controllers
             }
 
             // Si llegamos aquí, significa que hubo un error en el modelo, devolvemos la vista con errores
-            ViewBag.Jardines = new SelectList(await _context.Jardines.ToListAsync(), "IdJardin", "NombreJardin");
             return View(model);
         }
 
@@ -139,7 +136,7 @@ namespace icbf_web.Controllers
                 Role = roles.FirstOrDefault(), // Suponiendo que el usuario tiene un solo rol
        
             };
-            ViewBag.Jardines = new SelectList(await _context.Jardines.ToListAsync(), "IdJardin", "NombreJardin");
+
             return View(viewModel);
         }
 
@@ -216,7 +213,6 @@ namespace icbf_web.Controllers
             }
 
             // Si llegamos aquí, significa que ModelState no es válido, devolvemos la vista con errores
-            ViewBag.Jardines = new SelectList(await _context.Jardines.ToListAsync(), "IdJardin", "NombreJardin");
             return View(viewModel);
         }
 

@@ -53,7 +53,8 @@ namespace icbf_web.Controllers
         {
             ViewBag.Usuarios = new SelectList(await _userManager.Users.ToListAsync(), "Id", "Nombres");
             ViewBag.Jardines = new SelectList(await _context.Jardines.ToListAsync(), "IdJardin", "NombreJardin");
-            TipoSangreNino();
+
+
             return View();
         }
 
@@ -72,7 +73,7 @@ namespace icbf_web.Controllers
             }
             ViewBag.Usuarios = new SelectList(await _userManager.Users.ToListAsync(), "Id", "Nombres");
             ViewBag.Jardines = new SelectList(await _context.Jardines.ToListAsync(), "IdJardin", "NombreJardin");
-            TipoSangreNino();
+
             return View(nino);
         }
 
@@ -92,7 +93,7 @@ namespace icbf_web.Controllers
             // Configurar ViewBag con usuarios y jardines
             ViewBag.Usuarios = new SelectList(await _userManager.Users.ToListAsync(), "Id", "Nombres", nino.UsuarioId);
             ViewBag.Jardines = new SelectList(await _context.Jardines.ToListAsync(), "IdJardin", "NombreJardin", nino.JardinId);
-            TipoSangreNino();
+
             return View(nino);
         }
 
@@ -130,7 +131,6 @@ namespace icbf_web.Controllers
             }
             ViewBag.Usuarios = new SelectList(await _userManager.Users.ToListAsync(), "Id", "Nombres", nino.UsuarioId);
             ViewBag.Jardines = new SelectList(await _context.Jardines.ToListAsync(), "IdJardin", "NombreJardin", nino.JardinId);
-            TipoSangreNino();
             return View(nino);
         }
 
@@ -170,21 +170,6 @@ namespace icbf_web.Controllers
         private bool NinoExists(long id)
         {
             return _context.Ninos.Any(e => e.IdNino == id);
-        }
-        private void TipoSangreNino()
-        {
-            ViewBag.TipoSangreNino = new List<SelectListItem>
-            {
-                new SelectListItem { Text = "Seleccione un campo", Value = "" },
-                new SelectListItem { Text = "A+", Value = "A+" },
-                new SelectListItem { Text = "A-", Value = "A-" },
-                new SelectListItem { Text = "B+", Value = "B+" },
-                new SelectListItem { Text = "B-", Value = "B-" },
-                new SelectListItem { Text = "AB+", Value = "AB+" },
-                new SelectListItem { Text = "AB-", Value = "AB-" },
-                new SelectListItem { Text = "O+", Value = "O+" },
-                new SelectListItem { Text = "O-", Value = "O-" }
-            };
         }
     }
 }

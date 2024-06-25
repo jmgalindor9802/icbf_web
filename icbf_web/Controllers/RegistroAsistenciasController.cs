@@ -50,7 +50,6 @@ namespace icbf_web.Controllers
         public async Task<IActionResult>Create()
         {
             ViewBag.Ninos = new SelectList(await _context.Ninos.ToListAsync(), "IdNino", "NombreNino");
-            selectEstadoNino();
             return View();
         }
 
@@ -68,7 +67,6 @@ namespace icbf_web.Controllers
                 return RedirectToAction(nameof(Index));
             }
             ViewBag.Ninos = new SelectList(await _context.Ninos.ToListAsync(), "IdNino", "NombreNino");
-            selectEstadoNino();
             return View(registroAsistencia);
         }
 
@@ -86,7 +84,6 @@ namespace icbf_web.Controllers
                 return NotFound();
             }
             ViewBag.Ninos = new SelectList(await _context.Ninos.ToListAsync(), "IdNino", "NombreNino");
-            selectEstadoNino();
             return View(registroAsistencia);
         }
 
@@ -122,7 +119,7 @@ namespace icbf_web.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
-            selectEstadoNino();
+            
             return View(registroAsistencia);
         }
 
@@ -162,16 +159,6 @@ namespace icbf_web.Controllers
         private bool RegistroAsistenciaExists(int id)
         {
             return _context.RegistrosAsistencia.Any(e => e.IdRegistroAsistencia == id);
-        }
-        public void selectEstadoNino()
-        {
-            ViewBag.EstadoNinoRegistro = new List<SelectListItem>
-            {
-                new SelectListItem { Text = "Seleccionar un estado", Value = "" },
-                new SelectListItem { Text = "Enfermo", Value = "Enfermo" },
-                new SelectListItem { Text = "Sano", Value = "Sano" },
-                new SelectListItem { Text = "Decaido", Value = "Decaido" }
-            };
         }
     }
 }
