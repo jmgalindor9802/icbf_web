@@ -22,6 +22,9 @@ namespace icbf_web.Controllers
         // GET: RegistroAsistencias
         public async Task<IActionResult> Index()
         {
+            var registros = await _context.RegistrosAsistencia
+                             .Include(ra => ra.Nino) // Incluir la entidad Nino
+                             .ToListAsync();
             return View(await _context.RegistrosAsistencia.ToListAsync());
         }
 
