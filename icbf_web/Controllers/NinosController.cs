@@ -26,8 +26,29 @@ namespace icbf_web.Controllers
         // GET: Ninos
         public async Task<IActionResult> Index()
         {
-
+            ViewBag.Jardines = new SelectList(await _context.Jardines.ToListAsync(), "IdJardin", "NombreJardin");
             return View(await _context.Ninos.ToListAsync());
+        }
+
+        public async Task<IActionResult> IndexPorJardin(int? idJardin)
+        {
+            if (idJardin == null)
+            {
+                return NotFound();
+            }
+
+            var ninosEnJardin = await _context.Ninos
+                                            .Where(n => n.JardinId == idJardin)
+                                            .ToListAsync();
+
+            if (ninosEnJardin == null || ninosEnJardin.Count == 0)
+            {
+                return NotFound();
+            }
+
+            ViewBag.Jardines = new SelectList(await _context.Jardines.ToListAsync(), "IdJardin", "NombreJardin");
+
+            return View("Index", ninosEnJardin);
         }
 
         // GET: Ninos/Details/5

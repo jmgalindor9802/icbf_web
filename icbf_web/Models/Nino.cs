@@ -47,7 +47,8 @@ public partial class Nino
 
     [Required(ErrorMessage = "El campo Jardín es obligatorio.")]
     [Display(Name = "Jardín")]
-    public int JardinId { get; set; } 
+    public int JardinId { get; set; }
+    public virtual Jardin Jardin{ get; set; }
 
 
 
